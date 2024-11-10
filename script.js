@@ -1,80 +1,25 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const generateBtn = document.getElementById('generateBtn');
-    const copyBtn = document.getElementById('copyBtn');
-    const promptResult = document.getElementById('promptResult');
-    const apiKeyInput = document.getElementById('apiKeyInput');
+    // ... (previous code remains the same until systemPrompt) ...
 
-    // Load saved API key if it exists
-    apiKeyInput.value = localStorage.getItem('groqApiKey') || '';
-
-    // Save API key when it changes
-    apiKeyInput.addEventListener('change', function() {
-        localStorage.setItem('groqApiKey', apiKeyInput.value);
-    });
-
-    const API_URL = 'https://api.groq.com/openai/v1/chat/completions';
-    const negativePrompt = "deformed, unrealistic proportions, bad anatomy, watermark, signature, low quality, blurry";
-
-    async function generateAIPrompt(parameters) {
-        const apiKey = apiKeyInput.value.trim();
-        
-        if (!apiKey) {
-            throw new Error('Please enter your Groq API key');
-        }
-
-        const systemPrompt = `You are a Stable Diffusion prompt engineer. Create a detailed prompt for a realistic photo of a Japanese female bodybuilder with these specifications:
+    const systemPrompt = `You are a Stable Diffusion prompt engineer. Create a single, comma-separated sentence prompt for a realistic photo of a Japanese female bodybuilder. Include these specifications:
         - Pose: ${parameters.pose}
         - Clothing: ${parameters.clothing}
         - Location: ${parameters.location}
         - Lighting: ${parameters.lighting}
         
-        Focus on creating a photorealistic prompt that emphasizes:
-        - Muscular definition and proper anatomy
-        - Realistic lighting and atmosphere
-        - Professional photography style
-        - Natural and realistic body proportions
+        Rules:
+        - Format everything as ONE continuous sentence with commas
+        - Include muscular definition and proper anatomy details
+        - Include lighting and atmosphere details
+        - Include professional photography style elements
+        - Focus on photorealistic qualities
+        - DO NOT use multiple sentences or line breaks
+        - DO NOT include negative prompts
         
-        Format the prompt in a way that's optimized for Stable Diffusion.`;
+        Example format:
+        realistic photo of muscular woman, standing pose, detailed muscles, professional lighting, [rest of details...]`;
 
-        try {
-            const response = await fetch(API_URL, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${apiKey}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    model: 'mixtral-8x7b-32768',
-                    messages: [
-                        { role: "system", content: systemPrompt },
-                        { role: "user", content: "Generate a detailed Stable Diffusion prompt based on the given parameters." }
-                    ],
-                    temperature: 0.7,
-                    max_tokens: 150
-                })
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error?.message || 'API request failed');
-            }
-
-            const data = await response.json();
-            
-            // Add error checking for the response data
-            if (!data || !data.choices || !data.choices[0] || !data.choices[0].message) {
-                throw new Error('Invalid response format from API');
-            }
-
-            // Log the response for debugging
-            console.log('API Response:', data);
-
-            return data.choices[0].message.content.trim();
-        } catch (error) {
-            console.error('Full error:', error);
-            throw new Error(`API Error: ${error.message}`);
-        }
-    }
+    // ... (rest of the fetch code remains the same) ...
 
     async function generatePrompt() {
         const parameters = {
@@ -91,11 +36,8 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             const aiGeneratedPrompt = await generateAIPrompt(parameters);
             
-            const fullPrompt = `${aiGeneratedPrompt}
-
-Negative prompt: ${negativePrompt}
-
-Steps: 30, Sampler: DPM++ 2M Karras, CFG scale: 7, Size: 512x768`;
+            // Format everything in a single line with the negative prompt
+            const fullPrompt = `${aiGeneratedPrompt.replace(/\n/g, ', ')}\n\nNegative prompt: ${negativePrompt}\n\nSteps: 30, Sampler: DPM++ 2M Karras, CFG scale: 7, Size: 512x768`;
 
             promptResult.value = fullPrompt;
         } catch (error) {
@@ -107,16 +49,5 @@ Steps: 30, Sampler: DPM++ 2M Karras, CFG scale: 7, Size: 512x768`;
         }
     }
 
-    generateBtn.addEventListener('click', generatePrompt);
-
-    copyBtn.addEventListener('click', function() {
-        promptResult.select();
-        document.execCommand('copy');
-        
-        const originalText = copyBtn.textContent;
-        copyBtn.textContent = 'Copied!';
-        setTimeout(() => {
-            copyBtn.textContent = originalText;
-        }, 2000);
-    });
+    // ... (rest of the code remains the same) ...
 }); 
