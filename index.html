@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Japanese Female Bodybuilder Prompt Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="theme-switch-wrapper">
+        <label class="theme-switch">
+            <input type="checkbox" id="checkbox">
+            <div class="slider round"></div>
+        </label>
+        <em>Dark Mode</em>
+    </div>
+    <div class="container">
+        <h1>Japanese Female Bodybuilder<br>Prompt Generator</h1>
+        
+        <div class="prompt-box">
+            <h2>Positive Prompt:</h2>
+            <textarea id="positivePrompt" readonly></textarea>
+            <button onclick="copyToClipboard('positivePrompt')">Copy</button>
+        </div>
+
+        <div class="prompt-box">
+            <h2>Negative Prompt:</h2>
+            <textarea id="negativePrompt" readonly></textarea>
+            <button onclick="copyToClipboard('negativePrompt')">Copy</button>
+        </div>
+
+        <button id="generateBtn" class="generate-btn">Generate New Prompt</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 
