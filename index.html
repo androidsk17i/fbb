@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Japanese Female Bodybuilder Prompt Generator</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
@@ -13,7 +14,7 @@
         <div class="generator-box">
             <div class="options">
                 <div class="option-group">
-                    <label>Photo Style:</label>
+                    <label><i class="fas fa-camera"></i> Photo Style:</label>
                     <select id="photoStyle">
                         <option value="candid">Candid</option>
                         <option value="posed">Posed</option>
@@ -23,7 +24,7 @@
                 </div>
 
                 <div class="option-group">
-                    <label>Lighting:</label>
+                    <label><i class="fas fa-lightbulb"></i> Lighting:</label>
                     <select id="lighting">
                         <option value="natural">Natural Light</option>
                         <option value="studio">Studio Light</option>
@@ -33,7 +34,7 @@
                 </div>
 
                 <div class="option-group">
-                    <label>Outfit:</label>
+                    <label><i class="fas fa-tshirt"></i> Outfit:</label>
                     <select id="outfit">
                         <option value="workout">Workout Gear</option>
                         <option value="competition">Competition Bikini</option>
@@ -43,16 +44,38 @@
                 </div>
             </div>
 
-            <button id="generateBtn">Generate Prompt</button>
+            <div class="button-group">
+                <button id="generateBtn"><i class="fas fa-magic"></i> Generate Prompt</button>
+                <button onclick="generateRandom()"><i class="fas fa-random"></i> Random</button>
+            </div>
 
             <div class="result-box">
-                <textarea id="promptResult" readonly></textarea>
-                <button id="copyBtn">Copy Prompt</button>
+                <div class="prompt-section">
+                    <h3><i class="fas fa-plus-circle"></i> Positive Prompt</h3>
+                    <textarea id="positivePrompt" readonly></textarea>
+                    <button onclick="copyToClipboard(this, 'positive')" data-target="positivePrompt">
+                        <i class="fas fa-copy"></i> Copy Positive
+                    </button>
+                </div>
+
+                <div class="prompt-section">
+                    <h3><i class="fas fa-minus-circle"></i> Negative Prompt</h3>
+                    <textarea id="negativePrompt" readonly></textarea>
+                    <button onclick="copyToClipboard(this, 'negative')" data-target="negativePrompt">
+                        <i class="fas fa-copy"></i> Copy Negative
+                    </button>
+                </div>
+
+                <div class="share-buttons">
+                    <button onclick="sharePrompt(this)" data-prompt="">
+                        <i class="fas fa-share-alt"></i> Share
+                    </button>
+                </div>
             </div>
         </div>
 
         <div class="variant-box">
-            <h3>Prompt Variants</h3>
+            <h3><i class="fas fa-dice"></i> Prompt Variants</h3>
             <div id="variantList"></div>
         </div>
     </div>
