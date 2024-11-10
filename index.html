@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Japanese Female Bodybuilder Prompt Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Japanese Female Bodybuilder<br>Prompt Generator</h1>
+        
+        <div class="generator-box">
+            <div class="options">
+                <div class="option-group">
+                    <label>Photo Style:</label>
+                    <select id="photoStyle">
+                        <option value="candid">Candid</option>
+                        <option value="posed">Posed</option>
+                        <option value="action">Action Shot</option>
+                        <option value="gym">Gym Setting</option>
+                    </select>
+                </div>
+
+                <div class="option-group">
+                    <label>Lighting:</label>
+                    <select id="lighting">
+                        <option value="natural">Natural Light</option>
+                        <option value="studio">Studio Light</option>
+                        <option value="dramatic">Dramatic</option>
+                        <option value="gym">Gym Lighting</option>
+                    </select>
+                </div>
+
+                <div class="option-group">
+                    <label>Outfit:</label>
+                    <select id="outfit">
+                        <option value="workout">Workout Gear</option>
+                        <option value="competition">Competition Bikini</option>
+                        <option value="casual">Casual Wear</option>
+                        <option value="sportswear">Sportswear</option>
+                    </select>
+                </div>
+            </div>
+
+            <button id="generateBtn">Generate Prompt</button>
+
+            <div class="result-box">
+                <textarea id="promptResult" readonly></textarea>
+                <button id="copyBtn">Copy Prompt</button>
+            </div>
+        </div>
+
+        <div class="variant-box">
+            <h3>Prompt Variants</h3>
+            <div id="variantList"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 
