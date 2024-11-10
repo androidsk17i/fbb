@@ -127,3 +127,64 @@ if (currentTheme) {
         toggleSwitch.checked = true;
     }
 }
+
+function updateGradient() {
+    const hour = new Date().getHours();
+    const body = document.body;
+    
+    // Define gradient colors for different times of day
+    let gradientColors;
+    
+    if (document.documentElement.getAttribute('data-theme') === 'dark') {
+        // Dark theme gradients
+        if (hour >= 5 && hour < 8) { // Dawn
+            gradientColors = ['#1a1a1a', '#2d3436', '#3d3d3d'];
+        } else if (hour >= 8 && hour < 12) { // Morning
+            gradientColors = ['#1a1a1a', '#2c3e50', '#34495e'];
+        } else if (hour >= 12 && hour < 16) { // Afternoon
+            gradientColors = ['#1a1a1a', '#2d3436', '#2c3e50'];
+        } else if (hour >= 16 && hour < 19) { // Evening
+            gradientColors = ['#1a1a1a', '#2c3e50', '#2d3436'];
+        } else { // Night
+            gradientColors = ['#1a1a1a', '#1e272e', '#2d3436'];
+        }
+    } else {
+        // Light theme gradients
+        if (hour >= 5 && hour < 8) { // Dawn
+            gradientColors = ['#ff9966', '#ff5e62', '#f0f2f5'];
+        } else if (hour >= 8 && hour < 12) { // Morning
+            gradientColors = ['#4facfe', '#00f2fe', '#f0f2f5'];
+        } else if (hour >= 12 && hour < 16) { // Afternoon
+            gradientColors = ['#0095f6', '#00d4ff', '#f0f2f5'];
+        } else if (hour >= 16 && hour < 19) { // Evening
+            gradientColors = ['#ff9a9e', '#fad0c4', '#f0f2f5'];
+        } else { // Night
+            gradientColors = ['#a18cd1', '#fbc2eb', '#f0f2f5'];
+        }
+    }
+
+    // Create gradient string
+    const gradient = `linear-gradient(
+        135deg,
+        ${gradientColors[0]} 0%,
+        ${gradientColors[1]} 50%,
+        ${gradientColors[2]} 100%
+    )`;
+
+    body.style.background = gradient;
+}
+
+// Update gradient every minute
+setInterval(updateGradient, 60000);
+
+// Update gradient immediately when theme changes
+toggleSwitch.addEventListener('change', () => {
+    switchTheme(event);
+    updateGradient();
+});
+
+// Initial gradient update
+document.addEventListener('DOMContentLoaded', () => {
+    updateGradient();
+    generatePrompt();
+});
