@@ -459,4 +459,12 @@ footer { --animation-order: 8; }
     .social-btn:active {
         transform: scale(0.95);
     }
-} 
+}
+
+.prompt-box button {
+    display: block;
+    margin: 0 auto;
+    min-width: 100px;
+    padding: 0.5rem 1.5rem;
+    margin-top: 10px;
+}
