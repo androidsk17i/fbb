@@ -216,9 +216,44 @@ function shareOnLinkedIn() {
 }
 
 // Visitor Counter
-function updateVisitorCount() {
-    let count = localStorage.getItem('visitorCount') || 0;
-    count = parseInt(count) + 1;
-    localStorage.setItem('visitorCount', count);
-    document.getElementById('visitorCount').textContent = count;
+async function updateVisitorCount() {
+    try {
+        // Get IP address from ipify API
+        const ipResponse = await fetch('https://api.ipify.org?format=json');
+        const ipData = await ipResponse.json();
+        const ipAddress = ipData.ip;
+
+        // Get browser information
+        const browserInfo = getBrowserInfo();
+
+        // Update the display
+        document.getElementById('visitorCount').textContent = 
+            `IP: ${ipAddress} | Browser: ${browserInfo}`;
+    } catch (error) {
+        console.error('Error fetching IP:', error);
+        document.getElementById('visitorCount').textContent = 
+            `Browser: ${getBrowserInfo()}`;
+    }
+}
+
+// Add this new helper function
+function getBrowserInfo() {
+    const ua = navigator.userAgent;
+    let browserName;
+    
+    if (ua.match(/chrome|chromium|crios/i)) {
+        browserName = "Chrome";
+    } else if (ua.match(/firefox|fxios/i)) {
+        browserName = "Firefox";
+    } else if (ua.match(/safari/i)) {
+        browserName = "Safari";
+    } else if (ua.match(/opr\//i)) {
+        browserName = "Opera";
+    } else if (ua.match(/edg/i)) {
+        browserName = "Edge";
+    } else {
+        browserName = "Unknown";
+    }
+    
+    return browserName;
 }
