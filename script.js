@@ -5,21 +5,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const apiKeyInput = document.getElementById('apiKeyInput');
 
     // Load saved API key if it exists
-    apiKeyInput.value = localStorage.getItem('openRouterApiKey') || '';
+    apiKeyInput.value = localStorage.getItem('groqApiKey') || '';
 
     // Save API key when it changes
     apiKeyInput.addEventListener('change', function() {
-        localStorage.setItem('openRouterApiKey', apiKeyInput.value);
+        localStorage.setItem('groqApiKey', apiKeyInput.value);
     });
 
-    const API_URL = 'https://openrouter.ai/api/v1/chat/completions';
+    const API_URL = 'https://api.groq.com/openai/v1/chat/completions';
     const negativePrompt = "deformed, unrealistic proportions, bad anatomy, watermark, signature, low quality, blurry";
 
     async function generateAIPrompt(parameters) {
         const apiKey = apiKeyInput.value.trim();
         
         if (!apiKey) {
-            throw new Error('Please enter your OpenRouter API key');
+            throw new Error('Please enter your Groq API key');
         }
 
         const systemPrompt = `You are a Stable Diffusion prompt engineer. Create a detailed prompt for a realistic photo of a Japanese female bodybuilder with these specifications:
@@ -41,12 +41,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${apiKey}`,
-                    'Content-Type': 'application/json',
-                    'HTTP-Referer': window.location.href,
-                    'X-Title': 'Bodybuilder Prompt Generator'
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    model: 'anthropic/claude-3-sonnet',
+                    model: 'mixtral-8x7b-32768',
                     messages: [
                         { role: "system", content: systemPrompt },
                         { role: "user", content: "Generate a detailed Stable Diffusion prompt based on the given parameters." }
@@ -58,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (!response.ok) {
                 const errorData = await response.json();
-                throw new Error(errorData.message || 'API request failed');
+                throw new Error(errorData.error?.message || 'API request failed');
             }
 
             const data = await response.json();
