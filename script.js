@@ -1,104 +1,132 @@
 class PromptGenerator {
     constructor() {
         this.basePrompts = [
-            "amateur photograph of a Japanese female bodybuilder",
-            "candid shot of a muscular Japanese woman",
-            "realistic photo of a Japanese female athlete",
-            "authentic gym photo of a Japanese female bodybuilder"
+            "casual smartphone photo of a Japanese female bodybuilder",
+            "Instagram-style photo of a muscular Japanese woman",
+            "candid social media photo of a Japanese female athlete",
+            "Facebook-style photo of a Japanese female bodybuilder",
+            "amateur phone camera shot of a muscular Japanese woman",
+            "spontaneous photo of a Japanese female bodybuilder"
         ];
 
         this.bodyDescriptors = [
-            "chubby muscular build",
-            "strong athletic physique",
-            "powerful muscular frame",
-            "thick muscular body"
+            "chubby but muscular build",
+            "thick muscular physique",
+            "strong but natural-looking muscles",
+            "powerfully built but feminine",
+            "athletic and chunky build",
+            "muscular but soft features"
         ];
 
         this.poses = {
             candid: [
-                "casually flexing",
-                "natural stance",
-                "caught mid-movement",
-                "candid expression"
+                "casually smiling at camera",
+                "natural relaxed pose",
+                "caught in mid-laugh",
+                "candid mirror selfie",
+                "spontaneous pose",
+                "casual phone selfie"
             ],
             posed: [
-                "professional pose",
-                "competition stance",
-                "showing muscles",
-                "confident pose"
+                "friendly posed selfie",
+                "casual standing pose",
+                "relaxed mirror pose",
+                "natural smiling pose",
+                "casual peace sign pose",
+                "friendly wave at camera"
             ],
             action: [
-                "lifting weights",
-                "during workout",
-                "mid-exercise",
-                "training session"
+                "walking down the street",
+                "shopping at the mall",
+                "eating at a cafe",
+                "hanging out with friends",
+                "casual stretching",
+                "window shopping"
             ],
             gym: [
-                "at the gym",
-                "using equipment",
-                "between sets",
-                "preparing to lift"
+                "leaving the gym",
+                "arriving at the gym",
+                "gym bathroom mirror selfie",
+                "drinking protein shake",
+                "carrying gym bag",
+                "post-workout selfie"
             ]
         };
 
         this.lightingEffects = {
             natural: [
-                "soft natural lighting",
-                "daylight through windows",
-                "outdoor lighting",
-                "ambient light"
+                "natural daylight",
+                "golden hour sunlight",
+                "soft window lighting",
+                "outdoor evening light",
+                "cloudy day lighting",
+                "morning sunlight"
             ],
             studio: [
-                "studio lighting setup",
-                "professional lighting",
-                "controlled lighting",
-                "bright even lighting"
+                "indoor room lighting",
+                "home lighting",
+                "mall lighting",
+                "cafe lighting",
+                "restaurant lighting",
+                "store lighting"
             ],
             dramatic: [
-                "dramatic shadows",
-                "contrasting light",
-                "moody lighting",
-                "atmospheric lighting"
+                "sunset lighting",
+                "city street lights",
+                "neon sign lighting",
+                "evening golden hour",
+                "shopping mall lighting",
+                "cafe window lighting"
             ],
             gym: [
-                "fluorescent gym lighting",
-                "overhead gym lights",
-                "industrial lighting",
-                "practical gym lighting"
+                "parking lot lighting",
+                "gym entrance lighting",
+                "locker room lighting",
+                "gym lobby lighting",
+                "gym mirror lighting",
+                "gym bathroom lighting"
             ]
         };
 
         this.outfitDescriptions = {
             workout: [
-                "wearing workout clothes",
-                "in gym attire",
-                "sports bra and leggings",
-                "practical training outfit"
+                "wearing casual workout clothes",
+                "in comfortable gym wear",
+                "wearing loose fitting workout gear",
+                "in baggy training clothes",
+                "wearing oversized workout shirt",
+                "in comfortable training outfit"
             ],
             competition: [
-                "competition bikini",
-                "posing suit",
-                "competition outfit",
-                "stage wear"
+                "wearing casual athletic wear",
+                "in comfortable sportswear",
+                "wearing trendy athletic clothes",
+                "in fashionable gym wear",
+                "wearing popular athletic brand",
+                "in stylish workout clothes"
             ],
             casual: [
-                "casual athletic wear",
-                "comfortable clothes",
-                "everyday fitness wear",
-                "relaxed outfit"
+                "wearing everyday clothes",
+                "in jeans and t-shirt",
+                "wearing casual summer dress",
+                "in comfortable street wear",
+                "wearing trendy casual outfit",
+                "in baggy comfortable clothes"
             ],
             sportswear: [
-                "branded sportswear",
-                "athletic gear",
-                "performance wear",
-                "sports outfit"
+                "wearing athleisure outfit",
+                "in casual sports clothes",
+                "wearing trendy sportswear",
+                "in comfortable athletic wear",
+                "wearing popular sports brand",
+                "in casual athletic clothes"
             ]
         };
 
         this.negativePrompts = [
-            "deformed, blurry, bad anatomy, disfigured, poorly drawn face, mutation, mutated, extra limb, ugly, poorly drawn hands, missing limb, floating limbs, disconnected limbs, disconnected head, malformed hands, long neck, mutated hands and fingers, bad hands, missing fingers, cropped, worst quality, low quality, mutation, poorly drawn, huge calf, bad hands, fused hand, missing hand, disappearing arms, disappearing thigh, disappearing calf, disappearing legs, missing fingers, fused fingers, abnormal eye proportion, Abnormal hands, abnormal legs, abnormal feet, abnormal fingers",
-            "cartoon, anime, sketches, (worst quality:2), (low quality:2), (normal quality:2), lowres, normal quality, ((monochrome)), ((grayscale)), skin spots, acnes, skin blemishes, bad anatomy, DeepNegative, facing away, tilted head, Multiple people, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worstquality, low quality, normal quality, jpegartifacts, signature, watermark, username, blurry, bad feet",
-            "ugly, tiling, poorly drawn hands, poorly drawn feet, poorly drawn face, out of frame, mutation, mutated, extra limbs, extra legs, extra arms, disfigured, deformed, cross-eye, body out of frame, blurry, bad art, bad anatomy, watermark, signature, cut off, low contrast, underexposed, overexposed, bad art, beginner, amateur, distorted face"
+            "professional photography, studio photography, high end camera, professional camera, dslr, perfect composition, oversaturated, overexposed, perfect lighting, (professional lighting), staged photo, posed photo, professional model, skinny, thin, low body fat, deformed, blurry, bad anatomy, disfigured, poorly drawn face, mutation, mutated, extra limb, ugly, poorly drawn hands, missing limb, floating limbs, disconnected limbs, malformed hands, long neck, mutated hands and fingers, bad hands",
+            "professional photo, perfect photo, perfect face, perfect eyes, perfect lighting, studio lighting, professional studio, expensive camera, high end photography, advertisement photo, commercial photo, magazine photo, catalog photo, portfolio photo, stock photo, photoshoot, posed photo, staged photo, artificial pose, artificial smile, professional model, skinny, thin, low body fat",
+            "perfect composition, perfect framing, rule of thirds, professional grade, high end, luxury, expensive, high fashion, glamour, advertisement quality, commercial quality, magazine quality, catalog quality, portfolio quality, stock photo quality, photoshoot quality, staged quality, artificial quality, professional model quality"
         ];
     }
 
