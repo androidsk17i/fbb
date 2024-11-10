@@ -50,7 +50,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     messages: [
                         { role: "system", content: systemPrompt },
                         { role: "user", content: "Generate a detailed Stable Diffusion prompt based on the given parameters." }
-                    ]
+                    ],
+                    temperature: 0.7,
+                    max_tokens: 150
                 })
             });
 
@@ -60,8 +62,18 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             const data = await response.json();
-            return data.choices[0].message.content;
+            
+            // Add error checking for the response data
+            if (!data || !data.choices || !data.choices[0] || !data.choices[0].message) {
+                throw new Error('Invalid response format from API');
+            }
+
+            // Log the response for debugging
+            console.log('API Response:', data);
+
+            return data.choices[0].message.content.trim();
         } catch (error) {
+            console.error('Full error:', error);
             throw new Error(`API Error: ${error.message}`);
         }
     }
