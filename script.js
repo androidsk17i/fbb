@@ -66,6 +66,31 @@ const additionalDetails = [
     "(candid moment:1.1)", "(authentic details:1.2)"
 ];
 
+const gradientThemes = {
+    light: [
+        ['#ff9966', '#ff5e62', '#f0f2f5'],    // Warm Sunrise
+        ['#4facfe', '#00f2fe', '#f0f2f5'],    // Ocean Blue
+        ['#0095f6', '#00d4ff', '#f0f2f5'],    // Sky Blue
+        ['#ff9a9e', '#fad0c4', '#f0f2f5'],    // Soft Peach
+        ['#a18cd1', '#fbc2eb', '#f0f2f5'],    // Lavender
+        ['#84fab0', '#8fd3f4', '#f0f2f5'],    // Mint
+        ['#fad0c4', '#ffd1ff', '#f0f2f5'],    // Pink Cloud
+        ['#ffecd2', '#fcb69f', '#f0f2f5']     // Sunset
+    ],
+    dark: [
+        ['#1a1a1a', '#2d3436', '#3d3d3d'],    // Midnight
+        ['#1a1a1a', '#2c3e50', '#34495e'],    // Deep Ocean
+        ['#1a1a1a', '#2d3436', '#2c3e50'],    // Dark Steel
+        ['#1a1a1a', '#2c3e50', '#2d3436'],    // Shadow
+        ['#1a1a1a', '#1e272e', '#2d3436'],    // Abyss
+        ['#1a1a1a', '#292e49', '#2d3436'],    // Night Sky
+        ['#1a1a1a', '#434343', '#2d3436'],    // Charcoal
+        ['#1a1a1a', '#232526', '#2d3436']     // Dark Matter
+    ]
+};
+
+let currentGradientIndex = 0;
+
 function getRandomElement(array) {
     return array[Math.floor(Math.random() * array.length)];
 }
@@ -129,57 +154,32 @@ if (currentTheme) {
 }
 
 function updateGradient() {
-    const hour = new Date().getHours();
-    const body = document.body;
+    const theme = document.documentElement.getAttribute('data-theme');
+    const gradients = gradientThemes[theme === 'dark' ? 'dark' : 'light'];
     
-    // Define gradient colors for different times of day
-    let gradientColors;
-    
-    if (document.documentElement.getAttribute('data-theme') === 'dark') {
-        // Dark theme gradients
-        if (hour >= 5 && hour < 8) { // Dawn
-            gradientColors = ['#1a1a1a', '#2d3436', '#3d3d3d'];
-        } else if (hour >= 8 && hour < 12) { // Morning
-            gradientColors = ['#1a1a1a', '#2c3e50', '#34495e'];
-        } else if (hour >= 12 && hour < 16) { // Afternoon
-            gradientColors = ['#1a1a1a', '#2d3436', '#2c3e50'];
-        } else if (hour >= 16 && hour < 19) { // Evening
-            gradientColors = ['#1a1a1a', '#2c3e50', '#2d3436'];
-        } else { // Night
-            gradientColors = ['#1a1a1a', '#1e272e', '#2d3436'];
-        }
-    } else {
-        // Light theme gradients
-        if (hour >= 5 && hour < 8) { // Dawn
-            gradientColors = ['#ff9966', '#ff5e62', '#f0f2f5'];
-        } else if (hour >= 8 && hour < 12) { // Morning
-            gradientColors = ['#4facfe', '#00f2fe', '#f0f2f5'];
-        } else if (hour >= 12 && hour < 16) { // Afternoon
-            gradientColors = ['#0095f6', '#00d4ff', '#f0f2f5'];
-        } else if (hour >= 16 && hour < 19) { // Evening
-            gradientColors = ['#ff9a9e', '#fad0c4', '#f0f2f5'];
-        } else { // Night
-            gradientColors = ['#a18cd1', '#fbc2eb', '#f0f2f5'];
-        }
-    }
+    // Get current and next gradient colors
+    const currentColors = gradients[currentGradientIndex];
+    currentGradientIndex = (currentGradientIndex + 1) % gradients.length;
 
     // Create gradient string
     const gradient = `linear-gradient(
         135deg,
-        ${gradientColors[0]} 0%,
-        ${gradientColors[1]} 50%,
-        ${gradientColors[2]} 100%
+        ${currentColors[0]} 0%,
+        ${currentColors[1]} 50%,
+        ${currentColors[2]} 100%
     )`;
 
-    body.style.background = gradient;
+    // Apply gradient with transition
+    document.body.style.background = gradient;
 }
 
-// Update gradient every minute
+// Update gradient every 60 seconds
 setInterval(updateGradient, 60000);
 
 // Update gradient immediately when theme changes
 toggleSwitch.addEventListener('change', () => {
     switchTheme(event);
+    currentGradientIndex = 0; // Reset gradient index when theme changes
     updateGradient();
 });
 
@@ -189,11 +189,13 @@ document.addEventListener('DOMContentLoaded', () => {
     generatePrompt();
     updateVisitorCount();
     
-    // Add animation delays
     document.querySelectorAll('.animate-in').forEach((elem, index) => {
         elem.style.animationDelay = `${index * 0.1}s`;
     });
 });
+
+// Add this CSS transition to your styles.css
+document.body.style.transition = 'background 3s ease-in-out';
 
 // Social Share Functions
 function shareOnTwitter() {
