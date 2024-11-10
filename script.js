@@ -97,7 +97,7 @@ class PromptGenerator {
 
         this.negativePrompts = [
             "deformed, blurry, bad anatomy, disfigured, poorly drawn face, mutation, mutated, extra limb, ugly, poorly drawn hands, missing limb, floating limbs, disconnected limbs, disconnected head, malformed hands, long neck, mutated hands and fingers, bad hands, missing fingers, cropped, worst quality, low quality, mutation, poorly drawn, huge calf, bad hands, fused hand, missing hand, disappearing arms, disappearing thigh, disappearing calf, disappearing legs, missing fingers, fused fingers, abnormal eye proportion, Abnormal hands, abnormal legs, abnormal feet, abnormal fingers",
-            "cartoon, anime, sketches, (worst quality:2), (low quality:2), (normal quality:2), lowres, normal quality, ((monochrome)), ((grayscale)), skin spots, acnes, skin blemishes, bad anatomy, DeepNegative, facing away, tilted head, Multiple people, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worstquality, low quality, normal quality, jpegartifacts, signature, watermark, username, blurry, bad feet, cropped, poorly drawn hands, poorly drawn face, mutation, deformed, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, extra fingers, fewer digits, extra limbs, extra arms, extra legs, malformed limbs, fused fingers, too many fingers, long neck, cross-eyed, mutated hands, polar lowres, bad body, bad proportions, gross proportions, text, error, missing fingers, missing arms, missing legs, extra digit",
+            "cartoon, anime, sketches, (worst quality:2), (low quality:2), (normal quality:2), lowres, normal quality, ((monochrome)), ((grayscale)), skin spots, acnes, skin blemishes, bad anatomy, DeepNegative, facing away, tilted head, Multiple people, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worstquality, low quality, normal quality, jpegartifacts, signature, watermark, username, blurry, bad feet",
             "ugly, tiling, poorly drawn hands, poorly drawn feet, poorly drawn face, out of frame, mutation, mutated, extra limbs, extra legs, extra arms, disfigured, deformed, cross-eye, body out of frame, blurry, bad art, bad anatomy, watermark, signature, cut off, low contrast, underexposed, overexposed, bad art, beginner, amateur, distorted face"
         ];
     }
@@ -134,12 +134,12 @@ const generator = new PromptGenerator();
 
 // DOM Elements
 const generateBtn = document.getElementById('generateBtn');
-const promptResult = document.getElementById('promptResult');
-const copyBtn = document.getElementById('copyBtn');
-const variantList = document.getElementById('variantList');
 const photoStyle = document.getElementById('photoStyle');
 const lighting = document.getElementById('lighting');
 const outfit = document.getElementById('outfit');
+const positivePrompt = document.getElementById('positivePrompt');
+const negativePrompt = document.getElementById('negativePrompt');
+const variantList = document.getElementById('variantList');
 
 // Event Listeners
 generateBtn.addEventListener('click', () => {
@@ -149,8 +149,8 @@ generateBtn.addEventListener('click', () => {
         outfit.value
     );
     
-    document.getElementById('positivePrompt').value = mainPrompt.positive;
-    document.getElementById('negativePrompt').value = mainPrompt.negative;
+    positivePrompt.value = mainPrompt.positive;
+    negativePrompt.value = mainPrompt.negative;
 
     const variants = generator.generateVariants(
         photoStyle.value,
@@ -169,50 +169,54 @@ generateBtn.addEventListener('click', () => {
                 <p>${variant.negative}</p>
             </div>
             <div class="button-group">
-                <button onclick="copyToClipboard(this, 'positive')" data-prompt="${variant.positive}">Copy Positive</button>
-                <button onclick="copyToClipboard(this, 'negative')" data-prompt="${variant.negative}">Copy Negative</button>
-                <button onclick="sharePrompt(this)" data-prompt="${variant.positive}">Share</button>
+                <button onclick="copyToClipboard(this, 'positive')" data-prompt="${variant.positive}">
+                    <i class="fas fa-copy"></i> Copy Positive
+                </button>
+                <button onclick="copyToClipboard(this, 'negative')" data-prompt="${variant.negative}">
+                    <i class="fas fa-copy"></i> Copy Negative
+                </button>
+                <button onclick="sharePrompt('${encodeURIComponent(variant.positive)}')">
+                    <i class="fas fa-share-alt"></i> Share
+                </button>
             </div>
         </div>
     `).join('');
 });
 
-copyBtn.addEventListener('click', () => {
-    navigator.clipboard.writeText(promptResult.value);
-    copyBtn.textContent = 'Copied!';
-    setTimeout(() => {
-        copyBtn.textContent = 'Copy Prompt';
-    }, 2000);
-});
-
 function copyToClipboard(button, promptType) {
     const prompt = button.getAttribute('data-prompt');
-    navigator.clipboard.writeText(prompt);
-    button.textContent = 'Copied!';
-    setTimeout(() => {
-        button.textContent = 'Copy Variant';
-    }, 2000);
+    navigator.clipboard.writeText(prompt).then(() => {
+        const originalText = button.innerHTML;
+        button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+        button.classList.add('copy-feedback');
+        
+        setTimeout(() => {
+            button.innerHTML = originalText;
+            button.classList.remove('copy-feedback');
+        }, 2000);
+    }).catch(err => {
+        console.error('Failed to copy text: ', err);
+    });
 }
 
-function sharePrompt(button) {
-    const prompt = button.getAttribute('data-prompt');
+function sharePrompt(prompt) {
     const shareData = {
         title: 'AI Image Prompt',
-        text: prompt,
+        text: decodeURIComponent(prompt),
         url: window.location.href
     };
 
     if (navigator.share) {
         navigator.share(shareData)
+            .then(() => console.log('Shared successfully'))
             .catch((error) => console.log('Error sharing:', error));
     } else {
         // Fallback for browsers that don't support Web Share API
-        const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(prompt)}&url=${encodeURIComponent(window.location.href)}`;
+        const shareUrl = `https://twitter.com/intent/tweet?text=${prompt}&url=${encodeURIComponent(window.location.href)}`;
         window.open(shareUrl, '_blank');
     }
 }
 
-// Random generation function
 function generateRandom() {
     const styles = ['candid', 'posed', 'action', 'gym'];
     const lightings = ['natural', 'studio', 'dramatic', 'gym'];
@@ -223,4 +227,9 @@ function generateRandom() {
     outfit.value = outfits[Math.floor(Math.random() * outfits.length)];
 
     generateBtn.click();
-} 
+}
+
+// Generate initial prompt on page load
+window.addEventListener('DOMContentLoaded', () => {
+    generateBtn.click();
+}); 
