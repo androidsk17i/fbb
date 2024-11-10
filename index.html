@@ -5,32 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Japanese Female Bodybuilder Prompt Generator</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div class="theme-switch-wrapper">
+    <div class="theme-switch-wrapper animate-in">
         <label class="theme-switch">
             <input type="checkbox" id="checkbox">
             <div class="slider round"></div>
         </label>
         <em>Dark Mode</em>
     </div>
-    <div class="container">
+    <div class="container animate-in">
         <h1>Japanese Female Bodybuilder<br>Prompt Generator</h1>
         
-        <div class="prompt-box">
+        <div class="prompt-box animate-in">
             <h2>Positive Prompt:</h2>
             <textarea id="positivePrompt" readonly></textarea>
             <button onclick="copyToClipboard('positivePrompt')">Copy</button>
         </div>
 
-        <div class="prompt-box">
+        <div class="prompt-box animate-in">
             <h2>Negative Prompt:</h2>
             <textarea id="negativePrompt" readonly></textarea>
             <button onclick="copyToClipboard('negativePrompt')">Copy</button>
         </div>
 
-        <button id="generateBtn" class="generate-btn">Generate New Prompt</button>
+        <button id="generateBtn" class="generate-btn animate-in">Generate New Prompt</button>
+        
+        <div class="social-share animate-in">
+            <button onclick="shareOnTwitter()" class="social-btn twitter">
+                <i class="fab fa-twitter"></i>
+            </button>
+            <button onclick="shareOnFacebook()" class="social-btn facebook">
+                <i class="fab fa-facebook-f"></i>
+            </button>
+            <button onclick="shareOnLinkedIn()" class="social-btn linkedin">
+                <i class="fab fa-linkedin-in"></i>
+            </button>
+        </div>
+
+        <div class="visitor-counter animate-in">
+            <p>Visitors: <span id="visitorCount">0</span></p>
+        </div>
     </div>
+
+    <footer class="animate-in">
+        <p>© 2024 Prompt Generator | 
+            <a href="https://github.com/androidsk17i" target="_blank">
+                <i class="fab fa-github"></i> androidsk17i
+            </a>
+        </p>
+    </footer>
     <script src="script.js"></script>
 </body>
 </html> 

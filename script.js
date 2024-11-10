@@ -187,4 +187,36 @@ toggleSwitch.addEventListener('change', () => {
 document.addEventListener('DOMContentLoaded', () => {
     updateGradient();
     generatePrompt();
+    updateVisitorCount();
+    
+    // Add animation delays
+    document.querySelectorAll('.animate-in').forEach((elem, index) => {
+        elem.style.animationDelay = `${index * 0.1}s`;
+    });
 });
+
+// Social Share Functions
+function shareOnTwitter() {
+    const url = encodeURIComponent(window.location.href);
+    const text = encodeURIComponent('Check out this awesome Prompt Generator!');
+    window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+}
+
+function shareOnFacebook() {
+    const url = encodeURIComponent(window.location.href);
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+}
+
+function shareOnLinkedIn() {
+    const url = encodeURIComponent(window.location.href);
+    const title = encodeURIComponent('Prompt Generator');
+    window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${url}&title=${title}`, '_blank');
+}
+
+// Visitor Counter
+function updateVisitorCount() {
+    let count = localStorage.getItem('visitorCount') || 0;
+    count = parseInt(count) + 1;
+    localStorage.setItem('visitorCount', count);
+    document.getElementById('visitorCount').textContent = count;
+}
