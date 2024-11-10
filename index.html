@@ -3,80 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Japanese Female Bodybuilder Prompt Generator</title>
+    <title>SD Prompt Generator - Japanese Female Bodybuilder</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <h1>Japanese Female Bodybuilder<br>Prompt Generator</h1>
+        <h1>Stable Diffusion Prompt Generator</h1>
+        <h2>Japanese Female Bodybuilder Edition</h2>
         
-        <div class="generator-box">
-            <div class="options">
+        <div class="generator-section">
+            <div class="options-container">
                 <div class="option-group">
-                    <label><i class="fas fa-camera"></i> Photo Style:</label>
-                    <select id="photoStyle">
-                        <option value="candid">Candid</option>
-                        <option value="posed">Posed</option>
-                        <option value="action">Action Shot</option>
-                        <option value="gym">Gym Setting</option>
+                    <h3>Pose</h3>
+                    <select id="pose">
+                        <option value="standing pose">Standing Pose</option>
+                        <option value="front double biceps">Front Double Biceps</option>
+                        <option value="side chest pose">Side Chest Pose</option>
+                        <option value="back pose">Back Pose</option>
+                        <option value="most muscular pose">Most Muscular Pose</option>
                     </select>
                 </div>
 
                 <div class="option-group">
-                    <label><i class="fas fa-lightbulb"></i> Lighting:</label>
+                    <h3>Clothing</h3>
+                    <select id="clothing">
+                        <option value="bikini">Bikini</option>
+                        <option value="workout outfit">Workout Outfit</option>
+                        <option value="tank top and shorts">Tank Top and Shorts</option>
+                        <option value="sports bra and leggings">Sports Bra and Leggings</option>
+                    </select>
+                </div>
+
+                <div class="option-group">
+                    <h3>Location</h3>
+                    <select id="location">
+                        <option value="gym">Gym</option>
+                        <option value="beach">Beach</option>
+                        <option value="studio">Photo Studio</option>
+                        <option value="outdoor">Outdoor</option>
+                    </select>
+                </div>
+
+                <div class="option-group">
+                    <h3>Lighting</h3>
                     <select id="lighting">
-                        <option value="natural">Natural Light</option>
-                        <option value="studio">Studio Light</option>
-                        <option value="dramatic">Dramatic</option>
-                        <option value="gym">Gym Lighting</option>
-                    </select>
-                </div>
-
-                <div class="option-group">
-                    <label><i class="fas fa-tshirt"></i> Outfit:</label>
-                    <select id="outfit">
-                        <option value="workout">Workout Gear</option>
-                        <option value="competition">Competition Bikini</option>
-                        <option value="casual">Casual Wear</option>
-                        <option value="sportswear">Sportswear</option>
+                        <option value="natural lighting">Natural Lighting</option>
+                        <option value="studio lighting">Studio Lighting</option>
+                        <option value="dramatic lighting">Dramatic Lighting</option>
+                        <option value="soft lighting">Soft Lighting</option>
                     </select>
                 </div>
             </div>
 
-            <div class="button-group">
-                <button id="generateBtn"><i class="fas fa-magic"></i> Generate Prompt</button>
-                <button onclick="generateRandom()"><i class="fas fa-random"></i> Random</button>
+            <div class="api-key-container">
+                <h3>OpenRouter API Key</h3>
+                <input type="password" id="apiKeyInput" placeholder="Enter your OpenRouter API key" />
+                <small>Your API key is stored locally and never sent to any server except OpenRouter</small>
             </div>
 
-            <div class="result-box">
-                <div class="prompt-section">
-                    <h3><i class="fas fa-plus-circle"></i> Positive Prompt</h3>
-                    <textarea id="positivePrompt" readonly></textarea>
-                    <button onclick="copyToClipboard(this, 'positive')" data-target="positivePrompt">
-                        <i class="fas fa-copy"></i> Copy Positive
-                    </button>
-                </div>
+            <button id="generateBtn">Generate Prompt</button>
 
-                <div class="prompt-section">
-                    <h3><i class="fas fa-minus-circle"></i> Negative Prompt</h3>
-                    <textarea id="negativePrompt" readonly></textarea>
-                    <button onclick="copyToClipboard(this, 'negative')" data-target="negativePrompt">
-                        <i class="fas fa-copy"></i> Copy Negative
-                    </button>
-                </div>
-
-                <div class="share-buttons">
-                    <button onclick="sharePrompt(this)" data-prompt="">
-                        <i class="fas fa-share-alt"></i> Share
-                    </button>
-                </div>
+            <div class="result-container">
+                <h3>Generated Prompt:</h3>
+                <textarea id="promptResult" readonly></textarea>
+                <button id="copyBtn">Copy to Clipboard</button>
             </div>
-        </div>
-
-        <div class="variant-box">
-            <h3><i class="fas fa-dice"></i> Prompt Variants</h3>
-            <div id="variantList"></div>
         </div>
     </div>
     <script src="script.js"></script>
