@@ -18,13 +18,13 @@ const poses = [
 ];
 
 const clothes = [
-    "oversized t-shirt and jeans", "casual dress", "workout leggings and tank top",
-    "hoodie and sweatpants", "denim jacket and shorts", "summer dress",
-    "cardigan and skirt", "athletic wear", "casual blouse and pants",
-    "crop top and high-waisted jeans", "polo shirt and khakis", "sweater and leggings",
-    "button-up shirt and jeans", "track suit", "sundress and cardigan",
-    "tank top and cargo pants", "jersey and shorts", "long sleeve tee and joggers",
-    "sleeveless hoodie and shorts", "windbreaker and track pants"
+    "string micro bikini", "high-cut Brazilian bikini", "strappy wrap-around bikini",
+    "metallic triangle bikini", "cheeky thong bikini", "cut-out monokini",
+    "halter neck bikini", "bandeau bikini set", "crisscross bikini",
+    "tie-side bikini", "plunging v-neck bikini", "mesh panel bikini",
+    "chain detail bikini", "ruched scrunch bikini", "minimal coverage bikini",
+    "adjustable string bikini", "peek-a-boo bikini", "double strap bikini",
+    "revealing g-string bikini", "side-tie micro bikini"
 ];
 
 const lighting = [
